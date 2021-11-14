@@ -23,4 +23,12 @@ public class Message {
     public int hashCode() {
         return Objects.hash(phoneNumber, message);
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "phoneNumber='" + phoneNumber + '\'' +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

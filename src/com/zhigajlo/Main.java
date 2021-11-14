@@ -1,8 +1,5 @@
 package com.zhigajlo;
 
-import com.sun.source.tree.UsesTree;
-
-import java.sql.ClientInfoStatus;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -65,13 +62,13 @@ public class Main {
         showInfoResultCallLog(uniqueCallLogElements);
         showInfoResultMessage(uniqueMessageElements);
 
+        //Запуск ДЗ17. Задание 2.
+        GroupAllMessagesByContacts mapForContacts = new GroupAllMessagesByContacts();
+        mapForContacts.mapForContacts(uniqueContactElements, messageCollection);
 
-
-
-
-        MapForContacts mapForContacts = new MapForContacts();
-        mapForContacts.mapForContacts(contactList, messageCollection);
-
+        //Запуск ДЗ17. Задание 3
+        GroupAllCallsByContacts callsByContacts = new GroupAllCallsByContacts();
+        callsByContacts.callsByContacts(uniqueContactElements, callLogs);
 
 //        for (Contact contact : contactList) {
 //            Collection<CallLog> calls = numberOfCalls(callLogs, contact);
