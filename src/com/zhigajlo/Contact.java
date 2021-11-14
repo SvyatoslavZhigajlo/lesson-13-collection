@@ -1,6 +1,7 @@
 package com.zhigajlo;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Contact {
     public String name;
@@ -11,5 +12,19 @@ public class Contact {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.birthday = birthday;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return Objects.equals(name, contact.name) && Objects.equals(phoneNumber, contact.phoneNumber) &&
+                Objects.equals(birthday, contact.birthday);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, phoneNumber, birthday);
     }
 }

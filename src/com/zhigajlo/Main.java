@@ -1,14 +1,16 @@
 package com.zhigajlo;
 
+import com.sun.source.tree.UsesTree;
+
+import java.sql.ClientInfoStatus;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
+
 
 public class Main {
 
     public static void main(String[] args) {
-
         new Main().run();
     }
 
@@ -23,6 +25,11 @@ public class Main {
                 LocalDate.of(1988, 11, 25)));
         contactList.add(new Contact("Яна", "986354321",
                 LocalDate.of(1988, 3, 2)));
+        contactList.add(new Contact("Яна", "986354321",
+                LocalDate.of(1988, 3, 2)));
+        contactList.add(new Contact("Яна", "986354321",
+                LocalDate.of(1988, 3, 2)));
+
 
         Collection<CallLog> callLogs = new ArrayList<>();
         callLogs.add(new CallLog(LocalDateTime.now(), 68, "123456789", TypeCall.ВХОДЯЩИЙ));
@@ -38,6 +45,7 @@ public class Main {
         messageCollection.add(new Message("987658321", "Спам, спам"));
 
         Collection<Contact> resultSearchContact = searchContact(contactList, "123456789");
+        System.out.println(("\nРезультат поиска контакта").toUpperCase());
         showInfoResultContact(resultSearchContact);
 
         Collection<CallLog> resultSearchCallLog = searchCallLog(callLogs, "987658321");
@@ -46,6 +54,28 @@ public class Main {
         Collection<Message> resultSearchMessage = searchMessage(messageCollection, "987658321");
         showInfoResultMessage(resultSearchMessage);
 
+        //Определить и вывести уникальные элементы в коллекциях контактов,
+        // звонков и сообщений (List<Contact>, Set<Contact>)
+        Collection<Contact> uniqueContactElements = new HashSet<>(contactList);
+        Collection<CallLog> uniqueCallLogElements = new HashSet<>(callLogs);
+        Collection<Message> uniqueMessageElements = new HashSet<>(messageCollection);
+        System.out.println(("Результат ДЗ17. Задание 1. \n" +
+                "Определить и вывести уникальные элементы в коллекциях контактов, звонков и сообщений").toUpperCase());
+        showInfoResultContact(uniqueContactElements);
+        showInfoResultCallLog(uniqueCallLogElements);
+        showInfoResultMessage(uniqueMessageElements);
+
+
+
+
+
+        MapForContacts mapForContacts = new MapForContacts();
+        mapForContacts.mapForContacts(contactList, messageCollection);
+
+
+//        for (Contact contact : contactList) {
+//            Collection<CallLog> calls = numberOfCalls(callLogs, contact);
+//        }
     }
 
     private Collection<Contact> searchContact(Collection<Contact> contactList, String search) {
@@ -59,7 +89,6 @@ public class Main {
     }
 
     private void showInfoResultContact(Collection<Contact> result) {
-        System.out.println(("\nРезультат поиска контакта").toUpperCase());
         for (Contact contact : result) {
             System.out.println("\tНомер телефона: " + contact.phoneNumber +
                     "\n\tИмя: " + contact.name +
@@ -78,9 +107,9 @@ public class Main {
         return result;
     }
 
-    private void showInfoResultCallLog(Collection<CallLog> callLogs){
+    private void showInfoResultCallLog(Collection<CallLog> callLogs) {
         System.out.println(("\nРезультат поиска звонка").toUpperCase());
-        for (CallLog callLog: callLogs){
+        for (CallLog callLog : callLogs) {
             System.out.println("\t" + callLog.typeCall +
                     "\n\tНомер телефона: " + callLog.numberTelephone +
                     "\n\tПродолжительность разговора: " + callLog.callDuration + " сек" +
@@ -89,23 +118,35 @@ public class Main {
         }
     }
 
-    private Collection<Message> searchMessage(Collection<Message> messageCollection, String search){
+    private Collection<Message> searchMessage(Collection<Message> messageCollection, String search) {
         Collection<Message> result = new ArrayList<>();
-        for (Message message: messageCollection){
-            if (message.phoneNumber.contains(search)){
+        for (Message message : messageCollection) {
+            if (message.phoneNumber.contains(search)) {
                 result.add(message);
             }
         }
         return result;
     }
 
-    private void showInfoResultMessage(Collection<Message> messageCollection){
+    private void showInfoResultMessage(Collection<Message> messageCollection) {
         System.out.println(("\nРезультат поиска сообщения").toUpperCase());
-        for(Message message: messageCollection){
+        for (Message message : messageCollection) {
             System.out.println("\tНомер телефона: " + message.phoneNumber +
                     "\n\tТекст сообщения: " + message.message +
                     "\n\t---------------------");
 
         }
     }
+
+    private Collection<CallLog> numberOfCalls(Collection<CallLog> callLogs, Contact contact) {
+        List<CallLog> result = new ArrayList<>();
+        for (CallLog callLog : callLogs) {
+            if (callLog.numberTelephone.contains(contact.phoneNumber)) {
+                result.add(callLog);
+            }
+        }
+        return result;
+    }
+
+
 }
