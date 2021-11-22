@@ -11,9 +11,10 @@ import java.util.Map;
  */
 public class GroupAllCallsByContacts {
 
+    Map<String, Contact> resultContacts = new HashMap<>();
+    Map<String, Collection<CallLog>> resultCallLogs = new HashMap<>();
+
     public void callsByContacts(Collection<Contact> contacts, Collection<CallLog> callLogs) {
-        Map<String, Contact> resultContacts = new HashMap<>();
-        Map<String, Collection<CallLog>> resultCallLogs = new HashMap<>();
 
         //Используя отображения, сгруппируйте все звонки по контактам
         groupCallLogByContact(contacts, callLogs, resultContacts, resultCallLogs);
@@ -35,7 +36,6 @@ public class GroupAllCallsByContacts {
 
         for (Contact contact : contacts) {
             Collection<CallLog> allCallLogs = findCallLogForContact(contact, callLogs);
-            ;
             resultContact.put(contact.phoneNumber, contact);
             resultCallLogs.put(contact.phoneNumber, allCallLogs);
         }
@@ -51,9 +51,9 @@ public class GroupAllCallsByContacts {
         return result;
     }
 
-    private void showInfoCallLogForContact(Map<String, Collection<CallLog>> groupsMessage) {
-        for (Map.Entry<String, Collection<CallLog>> callLogForContact : groupsMessage.entrySet()) {
-            System.out.println(callLogForContact.getKey() + callLogForContact.getValue());
+    private void showInfoCallLogForContact(Map<String, Collection<CallLog>> groupsCallLog) {
+        for (Map.Entry<String, Collection<CallLog>> callLogForContact : groupsCallLog.entrySet()) {
+            System.out.println(callLogForContact.getKey() + callLogForContact.getValue().size());
         }
     }
 

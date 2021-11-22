@@ -13,19 +13,26 @@ public class Main {
 
     private void run() {
 
+        Contact contact1 = new Contact("Юлия", "123456789",
+                LocalDate.of(1988, 12, 6));
+        Contact contact2 = new Contact("Святослав", "987654321",
+                LocalDate.of(1988, 12, 25));
+        Contact contact3 = new Contact("Антон", "987658321",
+                LocalDate.of(1988, 11, 25));
+        Contact contact4 = new Contact("Яна", "986354321",
+                LocalDate.of(1988, 3, 2));
+        Contact contact5 = new Contact("Яна", "986354321",
+                LocalDate.of(1988, 3, 2));
+        Contact contact6 = new Contact("Яна", "986354321",
+                LocalDate.of(1988, 3, 2));
+
         Collection<Contact> contactList = new ArrayList<>();
-        contactList.add(new Contact("Юлия", "123456789",
-                LocalDate.of(1988, 12, 6)));
-        contactList.add(new Contact("Святослав", "987654321",
-                LocalDate.of(1988, 12, 25)));
-        contactList.add(new Contact("Антон", "987658321",
-                LocalDate.of(1988, 11, 25)));
-        contactList.add(new Contact("Яна", "986354321",
-                LocalDate.of(1988, 3, 2)));
-        contactList.add(new Contact("Яна", "986354321",
-                LocalDate.of(1988, 3, 2)));
-        contactList.add(new Contact("Яна", "986354321",
-                LocalDate.of(1988, 3, 2)));
+        contactList.add(contact1);
+        contactList.add(contact2);
+        contactList.add(contact3);
+        contactList.add(contact4);
+        contactList.add(contact5);
+        contactList.add(contact6);
 
 
         Collection<CallLog> callLogs = new ArrayList<>();
@@ -34,12 +41,24 @@ public class Main {
         callLogs.add(new CallLog(LocalDateTime.now(), 120, "123456789", TypeCall.ИСХОДЯЩИЙ));
         callLogs.add(new CallLog(LocalDateTime.now(), 98, "987658321", TypeCall.ИСХОДЯЩИЙ));
         callLogs.add(new CallLog(LocalDateTime.now(), 68, "123456789", TypeCall.ВХОДЯЩИЙ));
+        callLogs.add(new CallLog(LocalDateTime.now(), 68, "123476789", TypeCall.ВХОДЯЩИЙ));
+        callLogs.add(new CallLog(LocalDateTime.now(), 68, "123475689", TypeCall.ВХОДЯЩИЙ));
+        callLogs.add(new CallLog(LocalDateTime.now(), 68, "123456689", TypeCall.ВХОДЯЩИЙ));
+        callLogs.add(new CallLog(LocalDateTime.now(), 68, "123457869", TypeCall.ВХОДЯЩИЙ));
+        callLogs.add(new CallLog(LocalDateTime.now(), 68, "123445389", TypeCall.ВХОДЯЩИЙ));
+        callLogs.add(new CallLog(LocalDateTime.now(), 68, "123456789", TypeCall.ВХОДЯЩИЙ));
 
         Collection<Message> messageCollection = new ArrayList<>();
+        messageCollection.add(new Message("123456789", "Привет, я приехал"));
+        messageCollection.add(new Message("123456789", "Привет, я приехал"));
+        messageCollection.add(new Message("123456789", "Привет, я приехал"));
+        messageCollection.add(new Message("123456789", "Привет, я приехал"));
         messageCollection.add(new Message("123456789", "Привет, я приехал"));
         messageCollection.add(new Message("987658321", "Привет, забери заказ"));
         messageCollection.add(new Message("123456789", "Привет, отправь посылку"));
         messageCollection.add(new Message("987658321", "Спам, спам"));
+        messageCollection.add(new Message("984458321", "Спам, спам"));
+        messageCollection.add(new Message("984358321", "Спам, спам"));
 
         Collection<Contact> resultSearchContact = searchContact(contactList, "123456789");
         System.out.println(("\nРезультат поиска контакта").toUpperCase());
@@ -66,13 +85,19 @@ public class Main {
         GroupAllMessagesByContacts mapForContacts = new GroupAllMessagesByContacts();
         mapForContacts.mapForContacts(uniqueContactElements, messageCollection);
 
+
         //Запуск ДЗ17. Задание 3
         GroupAllCallsByContacts callsByContacts = new GroupAllCallsByContacts();
         callsByContacts.callsByContacts(uniqueContactElements, callLogs);
 
-//        for (Contact contact : contactList) {
-//            Collection<CallLog> calls = numberOfCalls(callLogs, contact);
-//        }
+        //Запуск ДЗ18. Задание 1
+        Top5ContactsWithMaxCallLog top5ContactsWithMaxCallLog = new Top5ContactsWithMaxCallLog();
+        top5ContactsWithMaxCallLog.numberOfCalls(callLogs);
+
+        Top5ContactsWithMaxMessage top5ContactsWithMaxMessage = new Top5ContactsWithMaxMessage();
+        top5ContactsWithMaxMessage.numberOfMessage(messageCollection, contact1);
+
+
     }
 
     private Collection<Contact> searchContact(Collection<Contact> contactList, String search) {
@@ -133,16 +158,6 @@ public class Main {
                     "\n\t---------------------");
 
         }
-    }
-
-    private Collection<CallLog> numberOfCalls(Collection<CallLog> callLogs, Contact contact) {
-        List<CallLog> result = new ArrayList<>();
-        for (CallLog callLog : callLogs) {
-            if (callLog.numberTelephone.contains(contact.phoneNumber)) {
-                result.add(callLog);
-            }
-        }
-        return result;
     }
 
 
