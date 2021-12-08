@@ -94,9 +94,20 @@ public class Main {
         Top5ContactsWithMaxCallLog top5ContactsWithMaxCallLog = new Top5ContactsWithMaxCallLog();
         top5ContactsWithMaxCallLog.numberOfCalls(callLogs);
 
+
         Top5ContactsWithMaxMessage top5ContactsWithMaxMessage = new Top5ContactsWithMaxMessage();
         top5ContactsWithMaxMessage.numberOfMessage(messageCollection, contact1);
 
+//        ДЗ 18 Задание 3 -Напишите методы для фильтрации коллекций контактов, звонков и сообщений с использованием
+//        функционального интерфейса Predicate<>. Измените написанные ранее методы поиска с использованием новых
+//        методов фильтрации.
+        PredicateFilter predicateFilter = new PredicateFilter();
+        Collection<Contact> contactListPredicate = predicateFilter.predicateFilter(contactList, contact4);
+        System.out.println("Predicate contact:" + contactListPredicate);
+        Collection<CallLog> callLogPredicate = predicateFilter
+                .predicateFilter(callLogs, new CallLog(LocalDateTime.now(), 68,
+                        "123456789", TypeCall.ВХОДЯЩИЙ));
+        System.out.println("Predicate callLog:" + callLogPredicate);
 
     }
 

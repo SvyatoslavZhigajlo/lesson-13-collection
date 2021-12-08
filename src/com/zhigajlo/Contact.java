@@ -27,4 +27,13 @@ public class Contact {
     public int hashCode() {
         return Objects.hash(name, phoneNumber, birthday);
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", birthday=" + birthday +
+                '}';
+    }
 }
